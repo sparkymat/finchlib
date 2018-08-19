@@ -3,21 +3,23 @@ package state
 type Type string
 
 const (
-	Pending   = Type("pending")
+	Accepted  = Type("accepted")
 	Approved  = Type("approved")
+	Archived  = Type("archived")
+	Completed = Type("completed")
 	Declined  = Type("declined")
 	Expired   = Type("expired")
-	Completed = Type("completed")
-	Archived  = Type("archived")
 	Fetched   = Type("fetched")
+	Pending   = Type("pending")
 )
 
 var Types = [...]Type{
-	Pending,
+	Accepted,
 	Approved,
+	Archived,
+	Completed,
 	Declined,
 	Expired,
-	Completed,
-	Archived,
 	Fetched,
+	Pending,
 }
