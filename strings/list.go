@@ -2,6 +2,7 @@ package strings
 
 import (
 	"errors"
+	"fmt"
 	"sort"
 
 	gostrings "strings"
@@ -16,6 +17,14 @@ func NewList() *List {
 	l.elements = []string{}
 
 	return &l
+}
+
+func ListFromPgStringArray(rawColumnValue string) (*List, error) {
+	if !gostrings.HasPrefix(rawColumnValue, "{") || !gostrings.HasSuffix(rawColumnValue, "}") {
+		return nil, errors.New("Invalid column value")
+	}
+	valueCSV := rawColumnValue[1 : len(rawColumnValue)-1]
+	return ListFromCSV(valueCSV, true), nil
 }
 
 func ListFromSlice(slice []string) *List {
@@ -131,4 +140,8 @@ func (l List) Sort() List {
 	sortedList.Add(l.Slice()...)
 	sort.Strings(sortedList.elements)
 	return *sortedList
+}
+
+func (l List) PgStringArrayValue() string {
+	return fmt.Sprintf("{%v}", l.CSV())
 }

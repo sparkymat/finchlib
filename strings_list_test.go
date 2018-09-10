@@ -47,6 +47,21 @@ var _ = Describe("StringsList", func() {
 		})
 	})
 
+	Describe("ListFromPgStringArrayValue", func() {
+		It("returns error if the param is not a valid pg string array value", func() {
+			list, err := strings.ListFromPgStringArray("something,else")
+			Expect(list).To(BeNil())
+			Expect(err).To(HaveOccurred())
+		})
+
+		It("returns a valid list if the param is valid", func() {
+			list, err := strings.ListFromPgStringArray("{foo,bar}")
+			Expect(list).ToNot(BeNil())
+			Expect(err).ToNot(HaveOccurred())
+			Expect(list.Slice()).To(Equal([]string{"foo", "bar"}))
+		})
+	})
+
 	It("checks if element exists in the list", func() {
 		Expect(list.Includes("foo")).To(BeFalse())
 		list.Add("foo")
@@ -135,5 +150,10 @@ var _ = Describe("StringsList", func() {
 		list = strings.ListFromCSV(" foo, foo, foo, bar", true)
 		set := list.Set()
 		Expect(set.List().Sort().Slice()).To(Equal([]string{"bar", "foo"}))
+	})
+
+	It("retusn pg_string_array value", func() {
+		list = strings.ListFromSlice([]string{"foo", "bar"})
+		Expect(list.PgStringArrayValue()).To(Equal("{foo,bar}"))
 	})
 })
