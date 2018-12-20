@@ -125,8 +125,12 @@ func (l List) Map(mapFunc func(e string) string) List {
 	return *mappedList
 }
 
+func (l List) Join(separator string) string {
+	return gostrings.Join(l.elements, separator)
+}
+
 func (l List) CSV() string {
-	return gostrings.Join(l.elements, ",")
+	return l.Join(",")
 }
 
 func (l List) Set() Set {

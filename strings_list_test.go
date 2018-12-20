@@ -141,6 +141,11 @@ var _ = Describe("StringsList", func() {
 		Expect(list.CSV()).To(Equal("foo,bar,jam"))
 	})
 
+	It("returns a joined string for the list", func() {
+		list = strings.ListFromSlice([]string{"foo", "bar", "jam"})
+		Expect(list.Join(":")).To(Equal("foo:bar:jam"))
+	})
+
 	It("returns a sorted list", func() {
 		list = strings.ListFromCSV("foo,bar,jam", true)
 		Expect(list.Sort().Slice()).To(Equal([]string{"bar", "foo", "jam"}))
