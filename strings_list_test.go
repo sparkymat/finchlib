@@ -91,9 +91,9 @@ var _ = Describe("StringsList", func() {
 		newList := list.Select(func(e string) bool {
 			if len(e) == 4 {
 				return true
-			} else {
-				return false
 			}
+
+			return false
 		})
 		Expect(newList.Slice()).To(Equal([]string{"adam", "dory"}))
 	})
@@ -103,9 +103,9 @@ var _ = Describe("StringsList", func() {
 		newList := list.Reject(func(e string) bool {
 			if e[0:1] == "a" || e[0:1] == "b" {
 				return true
-			} else {
-				return false
 			}
+
+			return false
 		})
 		Expect(newList.Slice()).To(Equal([]string{"charlie", "dory"}))
 	})
