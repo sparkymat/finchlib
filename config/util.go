@@ -7,9 +7,8 @@ import (
 	"strconv"
 )
 
-// UpdateStructFromEnv loops through all fields in a struct and replaces the value of any field with a `env:..` tag, with the specified environment variable
-func UpdateStructFromEnv(originalStruct interface{}) {
-	originalValue := reflect.ValueOf(originalStruct)
+// UpdateStructFromEnv loops through all fields in a struct and replaces the value of any field with a `env:..` tag, with the specified environment variable. Pass in reflect.ValueOf(pointer to struct)
+func UpdateStructFromEnv(originalValue reflect.Value) {
 	structValue := reflect.Indirect(originalValue)
 	structType := structValue.Type()
 
